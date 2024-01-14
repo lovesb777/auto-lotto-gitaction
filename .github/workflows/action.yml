@@ -3,7 +3,7 @@ name: Lotto Buy Bot (로또 구매봇)
 # on: [push]
 on:
   schedule:
-    - cron: "50 23 * * 5" # UST 기준의 크론. UST 23:50 는 KST 08:50
+    - cron: '55 23 * * 5' # UST 기준의 크론. UST 23:55 는 KST 08:55
 
 jobs:
   build:
@@ -22,10 +22,10 @@ jobs:
       - name: Install python package
         run: |
           pip install selenium
-          pip install requests
+          pip install requests        
           pip install twython
-          pip install pillow
-          pip install gspread
+          pip install pillow    
+          pip install gspread        
           pip install --upgrade google-api-python-client oauth2client
           pip install playwright
           python -m playwright install ${{ matrix.browser-channel }} --with-deps
@@ -34,11 +34,17 @@ jobs:
         run: |
           sudo apt-get install fonts-unfonts-core
           sudo apt-get install fonts-unfonts-extra
-          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add
-          sudo apt-get install google-chrome-stable
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add        
+          sudo apt-get install google-chrome-stable    
           wget https://chromedriver.storage.googleapis.com/100.0.4896.20/chromedriver_linux64.zip
-          unzip ./chromedriver_linux64.zip
+          unzip ./chromedriver_linux64.zip           
 
-      - name: Run for buying Lotto!
+      - name: Run!
+        env:
+          USER_ID: ${{ secrets.USER_ID }}
+          USER_PW: ${{ secrets.USER_PW }}
+          BUY_COUNT: ${{ secrets.BUY_COUNT }}
+          TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
+          TELEGRAM_BOT_CHANNEL_ID: ${{secrets.TELEGRAM_BOT_CHANNEL_ID}}
         run: |
-          python ./buy_lotto.py ${{secrets.USER_ID}} ${{secrets.USER_PW}} ${{secrets.SLACK_BOT_TOKEN}} ${{secrets.SLACK_CHANNEL}} ${{secrets.BUY_COUNT}}
+          python ./buy_lotto.py $USER_ID $USER_PW $BUY_COUNT $TELEGRAM_BOT_TOKEN $TELEGRAM_BOT_CHANNEL_ID
