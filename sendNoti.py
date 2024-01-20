@@ -4,7 +4,6 @@ import re
 from datetime import datetime, timedelta
 
 from requests import get, Response
-from playwright.sync_api import Playwright, sync_playwright
 
 # 동행복권 아이디와 패스워드를 설정
 USER_ID = sys.argv[1]
@@ -34,8 +33,7 @@ def send_message(message: str) -> Response:
     res = get(url, params=params, headers=headers)
     return res
 
-def run(playwright: Playwright) -> None:
+def run() -> None:
     send_message(f"이번주 나의 행운의 번호는?! 테스트!")
 
-with sync_playwright() as playwright:
-    run(playwright)
+run()

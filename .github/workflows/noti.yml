@@ -42,14 +42,6 @@ jobs:
           wget https://chromedriver.storage.googleapis.com/100.0.4896.20/chromedriver_linux64.zip
           unzip ./chromedriver_linux64.zip
 
-      - name: debug test
-        env:
-          MY_VARIABLE: ${{ secrets.USER_PW }}
-        run: |
-          echo $MY_VARIABLE
-          echo "Current Time: $(date)"
-
       - name: Run!
         run: |
-          echo ${{secrets.USER_ID}} ${{secrets.USER_PW}} ${{secrets.BUY_COUNT}} ${{secrets.TELEGRAM_BOT_TOKEN}} ${{secrets.TELEGRAM_BOT_CHANNEL_ID}}
-          python ./sendNoti.py ${{secrets.USER_ID}} ${{secrets.USER_PW}} ${{secrets.BUY_COUNT}} ${{secrets.TELEGRAM_BOT_TOKEN}} ${{secrets.TELEGRAM_BOT_CHANNEL_ID}}
+          python ./sendNoti.py ${{secrets.USER_ID}} '${{secrets.USER_PW}}' ${{secrets.BUY_COUNT}} '${{secrets.TELEGRAM_BOT_TOKEN}}' ${{secrets.TELEGRAM_BOT_CHANNEL_ID}}
