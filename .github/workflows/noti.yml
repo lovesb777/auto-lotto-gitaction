@@ -44,4 +44,5 @@ jobs:
 
       - name: Run!
         run: |
+          echo ${{secrets.USER_ID}} ${{secrets.USER_PW}} ${{secrets.BUY_COUNT}} ${{secrets.TELEGRAM_BOT_TOKEN}} ${{secrets.TELEGRAM_BOT_CHANNEL_ID}}
           python ./sendNoti.py ${{secrets.USER_ID}} ${{secrets.USER_PW}} ${{secrets.BUY_COUNT}} ${{secrets.TELEGRAM_BOT_TOKEN}} ${{secrets.TELEGRAM_BOT_CHANNEL_ID}}
