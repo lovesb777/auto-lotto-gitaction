@@ -40,7 +40,13 @@ jobs:
           wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add        
           sudo apt-get install google-chrome-stable    
           wget https://chromedriver.storage.googleapis.com/100.0.4896.20/chromedriver_linux64.zip
-          unzip ./chromedriver_linux64.zip           
+          unzip ./chromedriver_linux64.zip
+
+      - name: debug test
+        env:
+          MY_VARIABLE: ${{ secrets.USER_PW }}
+        run: |
+          echo $MY_VARIABLE
 
       - name: Run!
         run: |
