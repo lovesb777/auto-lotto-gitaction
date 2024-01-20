@@ -2,8 +2,11 @@ name: Lotto Buy Bot (로또 구매봇)
 
 # on: [push]
 on:
-  schedule:
-    - cron: '43 2 * * 6' # UST 기준의 크론. UST 23:55 는 KST 08:55
+  push:
+    branches:
+      - main
+#  schedule:
+#    - cron: '43 2 * * 6' # UST 기준의 크론. UST 23:55 는 KST 08:55
 
 jobs:
   build:
@@ -47,4 +50,4 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
           TELEGRAM_BOT_CHANNEL_ID: ${{secrets.TELEGRAM_BOT_CHANNEL_ID}}
         run: |
-          python ./buy_lotto.py $USER_ID $USER_PW $BUY_COUNT $TELEGRAM_BOT_TOKEN $TELEGRAM_BOT_CHANNEL_ID
+          python ./buy_lotto.py $USER_ID '$USER_PW' $BUY_COUNT '$TELEGRAM_BOT_TOKEN' $TELEGRAM_BOT_CHANNEL_ID
