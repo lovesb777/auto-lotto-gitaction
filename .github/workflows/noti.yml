@@ -43,11 +43,5 @@ jobs:
           unzip ./chromedriver_linux64.zip           
 
       - name: Run!
-        env:
-          USER_ID: ${{ secrets.USER_ID }}
-          USER_PW: ${{ secrets.USER_PW }}
-          BUY_COUNT: ${{ secrets.BUY_COUNT }}
-          TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
-          TELEGRAM_BOT_CHANNEL_ID: ${{secrets.TELEGRAM_BOT_CHANNEL_ID}}
         run: |
-          python ./sendNoti.py $USER_ID $USER_PW $BUY_COUNT $TELEGRAM_BOT_TOKEN $TELEGRAM_BOT_CHANNEL_ID
+          python ./sendNoti.py ${{secrets.USER_ID}} ${{secrets.USER_PW}} ${{secrets.BUY_COUNT}} ${{secrets.TELEGRAM_BOT_TOKEN}} ${{secrets.TELEGRAM_BOT_CHANNEL_ID}}
