@@ -2,11 +2,8 @@ name: send noti Bot (test)
 
 # on: [push]
 on:
-  push:
-    branches:
-      - main
-  #schedule:
-  #  - cron: '*/3 * * * *' # UST 기준의 크론. UST 23:55 는 KST 08:55
+  schedule:
+    - cron: '*/20 * * * *' # UST 기준의 크론. UST 23:55 는 KST 08:55
 
 jobs:
   build:

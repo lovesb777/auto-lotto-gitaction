@@ -34,6 +34,6 @@ def send_message(message: str) -> Response:
     return res
 
 def run() -> None:
-    send_message(f"이번주 나의 행운의 번호는?! 테스트!")
+    send_message(f"테스트!")
 
 run()
