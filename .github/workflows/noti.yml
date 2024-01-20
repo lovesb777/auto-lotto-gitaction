@@ -47,6 +47,7 @@ jobs:
           MY_VARIABLE: ${{ secrets.USER_PW }}
         run: |
           echo $MY_VARIABLE
+          echo "Current Time: $(date)"
 
       - name: Run!
         run: |
