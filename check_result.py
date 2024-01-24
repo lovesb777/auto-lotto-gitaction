@@ -4,19 +4,16 @@ import time
 from datetime import datetime, timedelta
 from typing import List
 
-from requests import post, Response
+from requests import get, Response
 from playwright.sync_api import Playwright, sync_playwright
-
-RUN_FILE_NAME = sys.argv[0]
 
 # 동행복권 아이디와 패스워드를 설정
 USER_ID = sys.argv[1]
 USER_PW = sys.argv[2]
 
-# SLACK 설정
-SLACK_API_URL = "https://slack.com/api/chat.postMessage"
-SLACK_BOT_TOKEN = sys.argv[3]
-SLACK_CHANNEL = sys.argv[4]
+# 텔레그램 봇 토큰을 설정
+TELEGRAM_BOT_TOKEN = sys.argv[3]
+TELEGRAM_BOT_CHANNEL_ID = sys.argv[4]
 
 
 def __get_now() -> datetime:
@@ -36,18 +33,15 @@ def __check_lucky_number(lucky_numbers: List[str], my_numbers: List[str]) -> str
     return return_msg
 
 
-def hook_slack(message: str) -> Response:
+def __send_message(message: str) -> Response:
     korea_time_str = __get_now().strftime("%Y-%m-%d %H:%M:%S")
-
-    payload = {
-        "text": f"> {korea_time_str} *로또 자동 구매 봇 알림* \n{message}",
-        "channel": SLACK_CHANNEL,
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    params = {
+        "chat_id": TELEGRAM_BOT_CHANNEL_ID,
+        "text": f"> {korea_time_str} *로또 자동 구매 봇 알림* \n {message}",
     }
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {SLACK_BOT_TOKEN}",
-    }
-    res = post(SLACK_API_URL, json=payload, headers=headers)
+    headers = { "Content-Type": "application/json" }
+    res = get(url, params=params, headers=headers)
     return res
 
 
@@ -73,8 +67,8 @@ def run(playwright: Playwright) -> None:
         # 당첨 결과 및 번호 확인
         page.goto("https://dhlottery.co.kr/common.do?method=main")
         result_info = page.query_selector("#article div.content").inner_text()
-        result_info = result_info.split("이전")[0].replace("\n", " ")
-        hook_slack(f"로또 결과: {result_info}")
+        result_info = result_info.split("이전")[0].replace("\n", " ").replace("  ", "\n")
+        __send_message(f"로또 결과: {result_info}")
 
         # 번호 추출하기
         # last index가 보너스 번호
@@ -116,13 +110,13 @@ def run(playwright: Playwright) -> None:
                 + __check_lucky_number(lucky_number, my_lucky_number[1:])
                 + "\n"
             )
-        hook_slack(f"> 이번주 나의 행운의 번호 결과는?!?!?!\n{result_msg}")
+        __send_message(f"> 이번주 나의 행운의 번호 결과는?!?!?!\n{result_msg}")
 
         # End of Selenium
         context.close()
         browser.close()
     except Exception as exc:
-        hook_slack(exc)
+        __send_message(exc)
         context.close()
         browser.close()
         raise exc
