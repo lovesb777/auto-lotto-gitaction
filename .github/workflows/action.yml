@@ -42,9 +42,9 @@ jobs:
       - name: Run!
         env:
           USER_ID: ${{ secrets.USER_ID }}
-          USER_PW: '${{ secrets.USER_PW }}'
+          USER_PW: ${{ secrets.USER_PW }}
           BUY_COUNT: ${{ secrets.BUY_COUNT }}
-          TELEGRAM_BOT_TOKEN: '${{secrets.TELEGRAM_BOT_TOKEN}}'
+          TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
           TELEGRAM_BOT_CHANNEL_ID: ${{secrets.TELEGRAM_BOT_CHANNEL_ID}}
         run: |
           python ./buy_lotto.py $USER_ID $USER_PW $BUY_COUNT $TELEGRAM_BOT_TOKEN $TELEGRAM_BOT_CHANNEL_ID
