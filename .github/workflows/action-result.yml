@@ -42,8 +42,8 @@ jobs:
       - name: Run for checking the result of Lotto!
         env:
           USER_ID: ${{ secrets.USER_ID }}
-          USER_PW: '${{ secrets.USER_PW }}'
-          TELEGRAM_BOT_TOKEN: '${{secrets.TELEGRAM_BOT_TOKEN}}'
+          USER_PW: ${{ secrets.USER_PW }}
+          TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
           TELEGRAM_BOT_CHANNEL_ID: ${{secrets.TELEGRAM_BOT_CHANNEL_ID}}
         run: |
           python ./check_result.py $USER_ID $USER_PW $TELEGRAM_BOT_TOKEN $TELEGRAM_BOT_CHANNEL_ID
